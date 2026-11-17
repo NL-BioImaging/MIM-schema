@@ -63,7 +63,7 @@ classes:
         slot_uri: mim:Agent_affiliations
         multivalued: true
       roles:
-        range: MIMOntologyTerm #check whether the role is an ontology term
+        range: MIMOntologyTerm
         slot_uri: mim:Agent_roles
         multivalued: true
         required: true
