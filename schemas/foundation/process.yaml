@@ -79,3 +79,9 @@ classes:
         slot_uri: mim:Process_measurements
         multivalued: true
         inlined: true
+      assay_reference:
+        description: Reference to the parent assay that this process is part of.
+        range: uriorcurie
+        slot_uri: mim:Process_assay_reference
+        annotations:
+          referenced_class: MIMAssay
