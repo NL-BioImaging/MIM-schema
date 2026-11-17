@@ -73,5 +73,6 @@ enums:
     permissible_values:
       person: {}
       organization: {}
+      department: {}
       group: {}
       software: {}
