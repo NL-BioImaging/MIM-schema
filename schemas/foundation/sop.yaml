@@ -16,7 +16,6 @@ imports:
 - protocol
 - file_format
 - factor
-- assay
 default_prefix: mim
 default_range: string
 
@@ -54,8 +53,3 @@ classes:
         annotations:
           jerm_range: jerm:Factors_studied
           mim_range_adaptation: MIMFactor
-      assay:
-        range: MIMAssay
-        slot_uri: jerm:isPartOf
-        annotations:
-          jerm_range: jerm:Assay
