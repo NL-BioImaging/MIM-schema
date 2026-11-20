@@ -1,0 +1,108 @@
+id: https://w3id.org/mim/schemas/bioimaging/hcs/plate
+name: mim_bioimaging_hcs_plate
+title: MIM HCS plate
+description: MIHCSME and REMBI-aligned microtiter plate specification for high-content screening.
+version: 1.0.0
+license: https://creativecommons.org/licenses/by/4.0/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  mim: https://w3id.org/mim/
+  jerm: http://jermontology.org/ontology/JERMOntology#
+  orcid: https://orcid.org/
+
+imports:
+  - linkml:types
+  - common
+  - ontology_term
+  - external_reference
+  - quantity_value
+  - well
+
+default_prefix: mim
+default_range: string
+
+created_by: orcid:0000-0002-4904-3269
+annotations:
+  created_by_name: Tooba Abbassi-Daloii
+  created_by_affiliation: Amsterdam UMC; ACDC
+  schema_status: draft
+  semantic_basis: MIHCSME / REMBI
+  module_name: plate
+  profile: bioimaging/hcs
+
+classes:
+  MIMPlate:
+    description: Microtiter plate physical geometry, optical bottom properties, and well layout container.
+    annotations:
+      alignment_status: MIHCSME_REMBI_ALIGNED
+    mixins:
+      - MIMIdentifiedMixin
+      - MIMNamedMixin
+      - MIMDescribedMixin
+      - MIMCommentedMixin
+    extra_slots:
+      allowed: true
+    attributes:
+      screen_reference:
+        description: Upward reference to the parent MIMScreen.
+        range: uriorcurie
+        slot_uri: mim:Plate_screen_reference
+        annotations:
+          referenced_class: MIMScreen
+      plate_type:
+        description: Commercial or structural plate model/type name (e.g., uclear, SensoPlate, 384 imaging plate uclear).
+        range: string
+        slot_uri: mim:Plate_plate_type
+      plate_format:
+        description: Standard well count format of the microplate (e.g., 96, 384, 1536).
+        range: integer
+        slot_uri: mim:Plate_plate_format
+      plate_number:
+        description: Sequential plate index or short plate identifier within the screen.
+        range: string
+        slot_uri: mim:Plate_plate_number
+      replicate_id:
+        description: Biological or technical replicate identifier when plates correspond to replicate runs.
+        range: string
+        slot_uri: mim:Plate_replicate_id
+      manufacturer:
+        description: Commercial vendor of the microplate (e.g., Greiner Bio-One).
+        range: string
+        slot_uri: mim:Plate_manufacturer
+      catalog_number:
+        description: Manufacturer catalog or part number (e.g., 781081).
+        range: string
+        slot_uri: mim:Plate_catalog_number
+      lot_number:
+        description: Manufacturing batch or lot number.
+        range: string
+        slot_uri: mim:Plate_lot_number
+      bottom_material:
+        description: Optical composition of the well bottom (e.g., borosilicate glass, cyclic olefin copolymer, polystyrene).
+        range: MIMOntologyTerm
+        slot_uri: mim:Plate_bottom_material
+      bottom_thickness:
+        description: Physical thickness of the well bottom with unit (e.g., 190 um).
+        range: MIMQuantityValue
+        slot_uri: mim:Plate_bottom_thickness
+        inlined: true
+      well_volume:
+        description: Working or maximum volume per well with unit (e.g., 50 uL).
+        range: MIMQuantityValue
+        slot_uri: mim:Plate_well_volume
+        inlined: true
+      external_references:
+        description: External repository identifiers for the plate (e.g., IDR Plate ID).
+        range: MIMExternalReference
+        slot_uri: mim:Plate_external_references
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      wells:
+        description: Individual well annotations belonging to this microplate.
+        range: MIMWell
+        slot_uri: mim:Plate_wells
+        multivalued: true
+        inlined: true
+        inlined_as_list: true

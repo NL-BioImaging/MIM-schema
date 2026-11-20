@@ -1,0 +1,111 @@
+id: https://w3id.org/mim/schemas/bioimaging/hcs/screen
+name: mim_bioimaging_hcs_screen
+title: MIM HCS screen
+description: MIHCSME-aligned high-content screening assay extending foundation MIMAssay.
+version: 1.0.0
+license: https://creativecommons.org/licenses/by/4.0/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  mim: https://w3id.org/mim/
+  jerm: http://jermontology.org/ontology/JERMOntology#
+  orcid: https://orcid.org/
+
+imports:
+  - linkml:types
+  - common
+  - assay
+  - data_file
+  - ontology_term
+  - plate
+
+default_prefix: mim
+default_range: string
+
+created_by: orcid:0000-0002-4904-3269
+annotations:
+  created_by_name: Tooba Abbassi-Daloii
+  created_by_affiliation: Amsterdam UMC; ACDC
+  schema_status: draft
+  semantic_basis: MIHCSME / EFO / JERM
+  module_name: screen
+  profile: bioimaging/hcs
+
+classes:
+  MIMScreeningLibrary:
+    description: Perturbation library metadata (compound, siRNA, shRNA, or CRISPR library) associated with a screen.
+    annotations:
+      alignment_status: MIHCSME_ALIGNED
+    mixins:
+      - MIMIdentifiedMixin
+      - MIMNamedMixin
+      - MIMDescribedMixin
+      - MIMVersionedMixin
+      - MIMCommentedMixin
+    extra_slots:
+      allowed: true
+    attributes:
+      library_type:
+        description: Ontology term or category describing the screening library (e.g., Compound library, siRNA library, CRISPR gRNA library).
+        range: MIMOntologyTerm
+        slot_uri: mim:ScreeningLibrary_library_type
+      manufacturer:
+        description: Commercial vendor or academic source providing the library (e.g., Selleck Chem, Ambion, Dharmacon).
+        range: string
+        slot_uri: mim:ScreeningLibrary_manufacturer
+      library_file:
+        description: Tabular or spreadsheet manifest file listing the library contents, linked as a foundation MIMDataFile.
+        range: MIMDataFile
+        slot_uri: mim:ScreeningLibrary_library_file
+      experimental_conditions:
+        description: Special growth or environmental conditions applied across the library screen.
+        range: string
+        slot_uri: mim:ScreeningLibrary_experimental_conditions
+      quality_control_description:
+        description: Summary of screen-wide quality control criteria and metrics (e.g., Z-prime thresholds).
+        range: string
+        slot_uri: mim:ScreeningLibrary_quality_control_description
+
+  MIMScreen:
+    description: >-
+      High-content screening assay extending foundation MIMAssay (inheriting title, description,
+      assay_type [EFO], technology_type [FBbi], processes, samples, study_reference,
+      external_references, contributors, and license).
+    annotations:
+      alignment_status: MIHCSME_ALIGNED
+    is_a: MIMAssay
+    extra_slots:
+      allowed: true
+    attributes:
+      screen_stage:
+        description: Screening campaign stage (e.g., primary screen, secondary screen, counter screen, validation screen).
+        range: MIMOntologyTerm
+        slot_uri: mim:Screen_screen_stage
+      biological_replicates_count:
+        description: Total number of independent biological replicates executed in the screen.
+        range: integer
+        slot_uri: mim:Screen_biological_replicates_count
+      total_plates:
+        description: Total number of microplates imaged in the screen.
+        range: integer
+        slot_uri: mim:Screen_total_plates
+      sites_per_well:
+        description: Default number of acquisition fields/sites imaged per well across the screen.
+        range: integer
+        slot_uri: mim:Screen_sites_per_well
+      omero_screen_url:
+        description: Direct OMERO or IDR webclient URI for the screen (e.g., show=screen-1460).
+        range: uri
+        slot_uri: mim:Screen_omero_screen_url
+      library:
+        description: Compound, siRNA, or genetic perturbation library screened in this assay.
+        range: MIMScreeningLibrary
+        slot_uri: mim:Screen_library
+        inlined: true
+      plates:
+        description: Microplates belonging to this high-content screen.
+        range: MIMPlate
+        slot_uri: mim:Screen_plates
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
