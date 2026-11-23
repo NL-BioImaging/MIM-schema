@@ -1,7 +1,8 @@
-id: https://w3id.org/mim/schemas/bioimaging/hcs/well
+id: https://w3id.org/mim/schemas/profiles/bioimaging/hcs/well
 name: mim_bioimaging_hcs_well
 title: MIM HCS well
-description: MIHCSME-aligned well coordinates, control roles, and links to foundation MIMSample, MIMDataFile, and MIMScreenTreatment.
+description: MIHCSME-aligned well coordinates, control roles, and links to foundation MIMSample, MIMDataFile, and
+  MIMScreenTreatment.
 version: 1.0.0
 license: https://creativecommons.org/licenses/by/4.0/
 
@@ -12,13 +13,15 @@ prefixes:
   orcid: https://orcid.org/
 
 imports:
-  - linkml:types
-  - common
-  - ontology_term
-  - external_reference
-  - data_file
-  - reagent
-
+- linkml:types
+- ../../../foundation/common
+- ../../../foundation/ontology_term
+- ../../../foundation/external_reference
+- ../../../foundation/sample
+- ../../../foundation/treatment
+- ../../../foundation/data_file
+- ../../../foundation/quantity_value
+- reagent
 default_prefix: mim
 default_range: string
 
@@ -33,27 +36,23 @@ annotations:
 
 classes:
   MIMWell:
-    description: Single microplate well record linking spatial coordinates and control roles to foundation samples, treatments, and image files.
+    description: Single microplate well record linking spatial coordinates and control roles to foundation samples,
+      treatments, and image files.
     annotations:
       alignment_status: MIHCSME_ALIGNED
     mixins:
-      - MIMIdentifiedMixin
-      - MIMNamedMixin
-      - MIMCommentedMixin
+    - MIMIdentifiedMixin
+    - MIMNamedMixin
+    - MIMCommentedMixin
     extra_slots:
       allowed: true
     attributes:
-      plate_reference:
-        description: Upward reference to the parent MIMPlate.
-        range: uriorcurie
-        slot_uri: mim:Well_plate_reference
-        annotations:
-          referenced_class: MIMPlate
       well_address:
         description: Combined alphanumeric well coordinate (e.g., A01, K09, B02).
         range: string
         slot_uri: mim:Well_well_address
         required: true
+        pattern: ^[A-Za-z]+[0-9]+$
       row_coordinate:
         description: Alphabetical row identifier (e.g., A..P).
         range: string
@@ -67,7 +66,8 @@ classes:
         range: integer
         slot_uri: mim:Well_well_number
       well_role:
-        description: Experimental role of the well (e.g., sample, positive control, negative control, vehicle control, blank).
+        description: Experimental role of the well (e.g., sample, positive control, negative control, vehicle control,
+          blank).
         range: MIMOntologyTerm
         slot_uri: mim:Well_well_role
       replicate_id:
@@ -78,10 +78,6 @@ classes:
         description: Well-level quality control outcome (e.g., pass, fail).
         range: string
         slot_uri: mim:Well_quality_control_status
-      fields_per_well:
-        description: Number of imaging fields/sites captured in this well if overriding the screen default.
-        range: integer
-        slot_uri: mim:Well_fields_per_well
       field_layout_pattern:
         description: Spatial arrangement of fields within the well (e.g., 6x6_montage, 1x2_grid, single_center).
         range: string
@@ -111,3 +107,8 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+      sites_per_well:
+        description: Optional well-specific override of the screen-level sites_per_well value.
+        range: integer
+        slot_uri: mim:Well_sites_per_well
+        minimum_value: 1

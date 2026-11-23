@@ -31,7 +31,7 @@ annotations:
 
 classes:
   MIMTreatment:
-    class_uri: jerm:treatment
+    class_uri: jerm:Treatment
     annotations:
       alignment_status: JERM_ALIGNED_WITH_MIM_EXTENSIONS
     is_a: MIMProcess

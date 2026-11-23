@@ -1,4 +1,4 @@
-id: https://w3id.org/mim/schemas/bioimaging/image_acquisition
+id: https://w3id.org/mim/schemas/profiles/bioimaging/image_acquisition
 name: mim_bioimaging_image_acquisition
 title: MIM image acquisition
 description: REMBI and MIHCSME-aligned microscopy acquisition process extending foundation MIMProcess.
@@ -12,13 +12,10 @@ prefixes:
   orcid: https://orcid.org/
 
 imports:
-  - linkml:types
-  - process
-  - ontology_term
-  - quantity_value
-  - imaging_instrument
-  - imaging_channel
-
+- linkml:types
+- ../../foundation/process
+- ../../foundation/ontology_term
+- imaging_instrument
 default_prefix: mim
 default_range: string
 
@@ -33,10 +30,8 @@ annotations:
 
 classes:
   MIMImageAcquisition:
-    description: >-
-      Microscopy image acquisition execution extending MIMProcess (inheriting protocol,
-      performers, input_materials, output_data, parameter_values, measurements, and
-      assay_reference).
+    description: Microscopy image acquisition execution extending MIMProcess (inheriting protocol, performers, input_materials,
+      output_data, parameter_values, measurements, and assay_reference).
     annotations:
       alignment_status: REMBI_MIHCSME_ALIGNED
     is_a: MIMProcess
@@ -44,69 +39,16 @@ classes:
       allowed: true
     attributes:
       imaging_method:
-        description: FBbi ontology term describing the microscopy imaging modality (e.g., confocal microscopy, bright-field microscopy, fluorescence microscopy).
+        description: FBbi ontology term describing the microscopy imaging modality (e.g., confocal microscopy, bright-field
+          microscopy, fluorescence microscopy).
         range: MIMOntologyTerm
         slot_uri: mim:ImageAcquisition_imaging_method
-      sample_preparation_method:
-        description: FBbi ontology term describing specimen preparation (e.g., Live cells, Formaldehyde fixed tissue, unfixed tissue).
-        range: MIMOntologyTerm
-        slot_uri: mim:ImageAcquisition_sample_preparation_method
       instrument:
         description: Microscope hardware configuration used during image acquisition.
         range: MIMImagingInstrument
         slot_uri: mim:ImageAcquisition_instrument
-      channels:
-        description: Ordered list of optical and specimen channels acquired in this imaging session.
-        range: MIMImagingChannel
-        slot_uri: mim:ImageAcquisition_channels
-        multivalued: true
-        inlined: true
-        inlined_as_list: true
-      size_x:
-        description: Image width in pixels (pixelsX).
-        range: integer
-        slot_uri: mim:ImageAcquisition_size_x
-      size_y:
-        description: Image height in pixels (pixelsY).
-        range: integer
-        slot_uri: mim:ImageAcquisition_size_y
-      size_z:
-        description: Number of axial z-slices per stack (z=1 for single 2D plane).
-        range: integer
-        slot_uri: mim:ImageAcquisition_size_z
-      size_c:
-        description: Total number of channels acquired (including transmitted light channel if present).
-        range: integer
-        slot_uri: mim:ImageAcquisition_size_c
-      size_t:
-        description: Number of timepoints captured in time-lapse series (t=1 for single timepoint).
-        range: integer
-        slot_uri: mim:ImageAcquisition_size_t
-      pixel_size_x:
-        description: Physical pixel width with spatial unit (e.g., 0.65 um).
-        range: MIMQuantityValue
-        slot_uri: mim:ImageAcquisition_pixel_size_x
-        inlined: true
-      pixel_size_y:
-        description: Physical pixel height with spatial unit (e.g., 0.65 um).
-        range: MIMQuantityValue
-        slot_uri: mim:ImageAcquisition_pixel_size_y
-        inlined: true
-      z_step_size:
-        description: Physical axial spacing between z-slices with spatial unit.
-        range: MIMQuantityValue
-        slot_uri: mim:ImageAcquisition_z_step_size
-        inlined: true
       time_interval:
-        description: Acquisition interval between consecutive timepoints with time unit (e.g., 8.5 min, 1.5 h).
+        description: Optional interval between sequential timepoints for time-lapse acquisition.
         range: MIMQuantityValue
         slot_uri: mim:ImageAcquisition_time_interval
         inlined: true
-      bit_depth:
-        description: Pixel intensity bit depth (e.g., 8, 12, 16).
-        range: integer
-        slot_uri: mim:ImageAcquisition_bit_depth
-      binning:
-        description: Camera detector pixel binning mode (e.g., 1x1, 2x2).
-        range: string
-        slot_uri: mim:ImageAcquisition_binning

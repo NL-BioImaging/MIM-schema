@@ -9,7 +9,7 @@ prefixes:
   linkml: https://w3id.org/linkml/
   mim: https://w3id.org/mim/
   jerm: http://jermontology.org/ontology/JERMOntology#
-  orcid: https://orcid.org
+  orcid: https://orcid.org/
 
 imports:
 - linkml:types

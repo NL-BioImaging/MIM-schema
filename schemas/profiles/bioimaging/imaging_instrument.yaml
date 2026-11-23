@@ -1,4 +1,4 @@
-id: https://w3id.org/mim/schemas/bioimaging/imaging_instrument
+id: https://w3id.org/mim/schemas/profiles/bioimaging/imaging_instrument
 name: mim_bioimaging_imaging_instrument
 title: MIM imaging instrument
 description: REMBI-aligned microscope and optical hardware specification extending foundation MIMHardwareComponent.
@@ -12,12 +12,11 @@ prefixes:
   orcid: https://orcid.org/
 
 imports:
-  - linkml:types
-  - hardware_component
-  - ontology_term
-  - external_reference
-  - quantity_value
-
+- linkml:types
+- ../../foundation/hardware_component
+- ../../foundation/ontology_term
+- ../../foundation/external_reference
+- ../../foundation/quantity_value
 default_prefix: mim
 default_range: string
 
@@ -32,9 +31,8 @@ annotations:
 
 classes:
   MIMImagingInstrument:
-    description: >-
-      Microscope system and optical hardware extending foundation MIMHardwareComponent
-      (inheriting id, title, description, version, comments, manufacturer, and model_number).
+    description: Microscope system and optical hardware extending foundation MIMHardwareComponent (inheriting id,
+      title, description, version, comments, manufacturer, and model_number).
     annotations:
       alignment_status: REMBI_ALIGNED_WITH_MIM_EXTENSIONS
     is_a: MIMHardwareComponent
@@ -45,7 +43,8 @@ classes:
       allowed: true
     attributes:
       microscope_type:
-        description: Ontology term (e.g., FBbi) describing the microscope modality (e.g., confocal microscope, widefield microscope).
+        description: Ontology term (e.g., FBbi) describing the microscope modality (e.g., confocal microscope, widefield
+          microscope).
         range: MIMOntologyTerm
         slot_uri: mim:ImagingInstrument_microscope_type
       micrometa_reference:
@@ -69,8 +68,3 @@ classes:
         description: Detector or camera sensor type (e.g., sCMOS, CCD, PMT, GaAsP).
         range: MIMOntologyTerm
         slot_uri: mim:ImagingInstrument_detector_type
-      excitation_wavelengths_nm:
-        description: Laser or excitation light source wavelengths in nanometers (e.g., 406, 488, 540, 647).
-        range: float
-        slot_uri: mim:ImagingInstrument_excitation_wavelengths_nm
-        multivalued: true

@@ -1,4 +1,4 @@
-id: https://w3id.org/mim/schemas/bioimaging/hcs/plate
+id: https://w3id.org/mim/schemas/profiles/bioimaging/hcs/plate
 name: mim_bioimaging_hcs_plate
 title: MIM HCS plate
 description: MIHCSME and REMBI-aligned microtiter plate specification for high-content screening.
@@ -12,13 +12,12 @@ prefixes:
   orcid: https://orcid.org/
 
 imports:
-  - linkml:types
-  - common
-  - ontology_term
-  - external_reference
-  - quantity_value
-  - well
-
+- linkml:types
+- ../../../foundation/common
+- ../../../foundation/ontology_term
+- ../../../foundation/external_reference
+- ../../../foundation/quantity_value
+- well
 default_prefix: mim
 default_range: string
 
@@ -37,31 +36,23 @@ classes:
     annotations:
       alignment_status: MIHCSME_REMBI_ALIGNED
     mixins:
-      - MIMIdentifiedMixin
-      - MIMNamedMixin
-      - MIMDescribedMixin
-      - MIMCommentedMixin
+    - MIMIdentifiedMixin
+    - MIMNamedMixin
+    - MIMDescribedMixin
+    - MIMCommentedMixin
     extra_slots:
       allowed: true
     attributes:
-      screen_reference:
-        description: Upward reference to the parent MIMScreen.
-        range: uriorcurie
-        slot_uri: mim:Plate_screen_reference
-        annotations:
-          referenced_class: MIMScreen
       plate_type:
-        description: Commercial or structural plate model/type name (e.g., uclear, SensoPlate, 384 imaging plate uclear).
+        description: Commercial or structural plate model/type name (e.g., uclear, SensoPlate, 384 imaging plate
+          uclear).
         range: string
         slot_uri: mim:Plate_plate_type
       plate_format:
         description: Standard well count format of the microplate (e.g., 96, 384, 1536).
         range: integer
         slot_uri: mim:Plate_plate_format
-      plate_number:
-        description: Sequential plate index or short plate identifier within the screen.
-        range: string
-        slot_uri: mim:Plate_plate_number
+        minimum_value: 1
       replicate_id:
         description: Biological or technical replicate identifier when plates correspond to replicate runs.
         range: string
@@ -79,18 +70,14 @@ classes:
         range: string
         slot_uri: mim:Plate_lot_number
       bottom_material:
-        description: Optical composition of the well bottom (e.g., borosilicate glass, cyclic olefin copolymer, polystyrene).
+        description: Optical composition of the well bottom (e.g., borosilicate glass, cyclic olefin copolymer,
+          polystyrene).
         range: MIMOntologyTerm
         slot_uri: mim:Plate_bottom_material
       bottom_thickness:
         description: Physical thickness of the well bottom with unit (e.g., 190 um).
         range: MIMQuantityValue
         slot_uri: mim:Plate_bottom_thickness
-        inlined: true
-      well_volume:
-        description: Working or maximum volume per well with unit (e.g., 50 uL).
-        range: MIMQuantityValue
-        slot_uri: mim:Plate_well_volume
         inlined: true
       external_references:
         description: External repository identifiers for the plate (e.g., IDR Plate ID).
@@ -106,3 +93,8 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+      maximum_well_volume:
+        description: Maximum supported liquid volume per well with unit.
+        range: MIMQuantityValue
+        slot_uri: mim:Plate_maximum_well_volume
+        inlined: true
