@@ -1,47 +1,89 @@
-id: https://w3id.org/mim/profiles/bioimaging/imaging_channel
+id: https://w3id.org/mim/schemas/bioimaging/imaging_channel
 name: mim_bioimaging_imaging_channel
 title: MIM imaging channel
-description: Bioimaging channel profile component.
+description: REMBI and MIHCSME-aligned specimen staining, fluorophore, and optical channel specification.
 version: 1.0.0
 license: https://creativecommons.org/licenses/by/4.0/
-imports:
-- linkml:types
-- ../../foundation/common
-- ../../foundation/ontology_term
-default_prefix: mim
-default_range: string
+
 prefixes:
   linkml: https://w3id.org/linkml/
   mim: https://w3id.org/mim/
   jerm: http://jermontology.org/ontology/JERMOntology#
-  sh: http://www.w3.org/ns/shacl#
-  prov: http://www.w3.org/ns/prov#
   orcid: https://orcid.org/
+
+imports:
+  - linkml:types
+  - common
+  - ontology_term
+  - external_reference
+  - quantity_value
+
+default_prefix: mim
+default_range: string
+
 created_by: orcid:0000-0002-4904-3269
 annotations:
   created_by_name: Tooba Abbassi-Daloii
   created_by_affiliation: Amsterdam UMC; ACDC
   schema_status: draft
-  namespace_status: provisional
-  ecosystem_name: Multiomics and Imaging Metadata (MIM)
-  semantic_basis: JERM
+  semantic_basis: REMBI / MIHCSME / FBbi
   module_name: imaging_channel
   profile: bioimaging
+
 classes:
   MIMImagingChannel:
+    description: Single optical/fluorescent or transmitted-light channel describing visualization method, target entity, and label.
+    annotations:
+      alignment_status: REMBI_MIHCSME_ALIGNED
     mixins:
-    - MIMIdentifiedMixin
-    - MIMNamedMixin
-    - MIMDescribedMixin
+      - MIMIdentifiedMixin
+      - MIMNamedMixin
+      - MIMCommentedMixin
     extra_slots:
       allowed: true
     attributes:
       channel_index:
+        description: Sequential 1-based channel order identifier in the image stack.
         range: integer
-        slot_uri: mim:MIMImagingChannel_channel_index
-      visualised_entity:
+        slot_uri: mim:ImagingChannel_channel_index
+        required: true
+      is_transmission_channel:
+        description: Flag indicating whether this channel captures transmitted/bright-field light rather than fluorescence.
+        range: boolean
+        slot_uri: mim:ImagingChannel_is_transmission_channel
+      visualization_method:
+        description: FBbi ontology term describing the visualization or staining method (e.g., Hoechst 33342, EGFP, mCherryFP, propidium iodide).
         range: MIMOntologyTerm
-        slot_uri: mim:MIMImagingChannel_visualised_entity
-      visualisation_method:
+        slot_uri: mim:ImagingChannel_visualization_method
+      visualized_entity:
+        description: Biological structure, macromolecule, or gene/protein visualized in this channel (e.g., DNA, DDIT3, LMNA, TNFAIP3).
+        range: string
+        slot_uri: mim:ImagingChannel_visualized_entity
+      visualized_entity_reference:
+        description: Optional external identifier (e.g., HGNC, Ensembl, UniProt, GO) for the visualized biological entity.
+        range: MIMExternalReference
+        slot_uri: mim:ImagingChannel_visualized_entity_reference
+        inlined: true
+      channel_label:
+        description: Short human- and pipeline-readable label assigned to the channel (e.g., Nuclei, CHOP-GFP, PI, AnV).
+        range: string
+        slot_uri: mim:ImagingChannel_channel_label
+      fluorophore:
+        description: Fluorophore or fluorescent dye conjugated to the probe or expressed as a fusion tag (e.g., Alexa Fluor 633, GFP).
         range: MIMOntologyTerm
-        slot_uri: mim:MIMImagingChannel_visualisation_method
+        slot_uri: mim:ImagingChannel_fluorophore
+      excitation_wavelength:
+        description: Excitation wavelength setting with unit (e.g., 488 nm).
+        range: MIMQuantityValue
+        slot_uri: mim:ImagingChannel_excitation_wavelength
+        inlined: true
+      emission_wavelength:
+        description: Emission wavelength or filter center with unit (e.g., 525 nm).
+        range: MIMQuantityValue
+        slot_uri: mim:ImagingChannel_emission_wavelength
+        inlined: true
+      exposure_time:
+        description: Detector exposure duration for this channel with unit (e.g., 100 ms).
+        range: MIMQuantityValue
+        slot_uri: mim:ImagingChannel_exposure_time
+        inlined: true

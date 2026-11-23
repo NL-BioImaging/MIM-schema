@@ -14,16 +14,12 @@ prefixes:
   linkml: https://w3id.org/linkml/
   mim: https://w3id.org/mim/
   jerm: http://jermontology.org/ontology/JERMOntology#
-  sh: http://www.w3.org/ns/shacl#
-  prov: http://www.w3.org/ns/prov#
   orcid: https://orcid.org/
 created_by: orcid:0000-0002-4904-3269
 annotations:
   created_by_name: Tooba Abbassi-Daloii
   created_by_affiliation: Amsterdam UMC; ACDC
   schema_status: draft
-  namespace_status: provisional
-  ecosystem_name: Multiomics and Imaging Metadata (MIM)
   semantic_basis: JERM
   module_name: imaging_method
   profile: bioimaging
@@ -38,5 +34,5 @@ classes:
     attributes:
       method_term:
         range: MIMOntologyTerm
-        slot_uri: mim:MIMImagingMethod_method_term
+        slot_uri: mim:ImagingMethod_method_term
         required: true

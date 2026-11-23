@@ -1,0 +1,32 @@
+id: https://w3id.org/mim/schemas/domain_specific_profiles/bioimaging/image_data
+name: mim_bioimaging_image_data
+title: mim bioimaging image data
+description: Draft MIM domain-profile module derived from MIHCSME examples.
+version: 1.0.0
+imports:
+- linkml:types
+default_prefix: mim
+default_range: string
+classes:
+  MIMImageData:
+    is_a: MIMDataFile
+    attributes:
+      size_x:
+        range: integer
+      size_y:
+        range: integer
+      size_z:
+        range: integer
+      channel_count:
+        range: integer
+      timepoint_count:
+        range: integer
+      sites_per_well:
+        range: integer
+      transmission_channel_index:
+        range: integer
+      channels:
+        range: MIMImagingChannel
+        multivalued: true
+        inlined: true
+        inlined_as_list: true

@@ -1,45 +1,76 @@
-id: https://w3id.org/mim/profiles/bioimaging/imaging_instrument
+id: https://w3id.org/mim/schemas/bioimaging/imaging_instrument
 name: mim_bioimaging_imaging_instrument
 title: MIM imaging instrument
-description: Bioimaging instrument profile component.
+description: REMBI-aligned microscope and optical hardware specification extending foundation MIMHardwareComponent.
 version: 1.0.0
 license: https://creativecommons.org/licenses/by/4.0/
-imports:
-- linkml:types
-- ../../foundation/hardware_component
-- ../../foundation/institution
-default_prefix: mim
-default_range: string
+
 prefixes:
   linkml: https://w3id.org/linkml/
   mim: https://w3id.org/mim/
   jerm: http://jermontology.org/ontology/JERMOntology#
-  sh: http://www.w3.org/ns/shacl#
-  prov: http://www.w3.org/ns/prov#
   orcid: https://orcid.org/
+
+imports:
+  - linkml:types
+  - hardware_component
+  - ontology_term
+  - external_reference
+  - quantity_value
+
+default_prefix: mim
+default_range: string
+
 created_by: orcid:0000-0002-4904-3269
 annotations:
   created_by_name: Tooba Abbassi-Daloii
   created_by_affiliation: Amsterdam UMC; ACDC
   schema_status: draft
-  namespace_status: provisional
-  ecosystem_name: Multiomics and Imaging Metadata (MIM)
-  semantic_basis: JERM
+  semantic_basis: REMBI / FBbi
   module_name: imaging_instrument
   profile: bioimaging
+
 classes:
   MIMImagingInstrument:
+    description: >-
+      Microscope system and optical hardware extending foundation MIMHardwareComponent
+      (inheriting id, title, description, version, comments, manufacturer, and model_number).
+    annotations:
+      alignment_status: REMBI_ALIGNED_WITH_MIM_EXTENSIONS
     is_a: MIMHardwareComponent
+    slot_usage:
+      component_type:
+        equals_string: MIMHardwareComponent
     extra_slots:
       allowed: true
     attributes:
-      model:
-        range: string
-        slot_uri: mim:MIMImagingInstrument_model
-      manufacturer:
-        range: MIMInstitution
-        slot_uri: mim:MIMImagingInstrument_manufacturer
-      components:
-        range: MIMHardwareComponent
-        slot_uri: mim:MIMImagingInstrument_components
+      microscope_type:
+        description: Ontology term (e.g., FBbi) describing the microscope modality (e.g., confocal microscope, widefield microscope).
+        range: MIMOntologyTerm
+        slot_uri: mim:ImagingInstrument_microscope_type
+      micrometa_reference:
+        description: Resolvable reference to a Micro-Meta App hardware configuration file or instrument record.
+        range: MIMExternalReference
+        slot_uri: mim:ImagingInstrument_micrometa_reference
+        inlined: true
+      objective_magnification:
+        description: Nominal magnification of the objective lens (e.g., 10, 20, 40, 63).
+        range: float
+        slot_uri: mim:ImagingInstrument_objective_magnification
+      objective_numerical_aperture:
+        description: Numerical aperture (NA) of the objective lens.
+        range: float
+        slot_uri: mim:ImagingInstrument_objective_numerical_aperture
+      immersion_medium:
+        description: Optical immersion medium used with the objective lens (e.g., air, water, immersion oil).
+        range: MIMOntologyTerm
+        slot_uri: mim:ImagingInstrument_immersion_medium
+      detector_type:
+        description: Detector or camera sensor type (e.g., sCMOS, CCD, PMT, GaAsP).
+        range: MIMOntologyTerm
+        slot_uri: mim:ImagingInstrument_detector_type
+      excitation_wavelengths_nm:
+        description: Laser or excitation light source wavelengths in nanometers (e.g., 406, 488, 540, 647).
+        range: float
+        slot_uri: mim:ImagingInstrument_excitation_wavelengths_nm
         multivalued: true
