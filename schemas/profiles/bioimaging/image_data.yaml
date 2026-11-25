@@ -1,0 +1,67 @@
+id: https://w3id.org/mim/schemas/profiles/bioimaging/image_data
+name: mim_bioimaging_image_data
+title: MIM image data
+description: REMBI- and MIHCSME-aligned microscopy image data extending foundation MIMDataFile.
+version: 1.0.0
+license: https://creativecommons.org/licenses/by/4.0/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  mim: https://w3id.org/mim/
+  orcid: https://orcid.org/
+
+imports:
+- linkml:types
+- ../../foundation/data_file
+- imaging_channel
+default_prefix: mim
+default_range: string
+
+created_by: orcid:0000-0002-4904-3269
+annotations:
+  created_by_name: Tooba Abbassi-Daloii
+  created_by_affiliation: Amsterdam UMC; ACDC
+  schema_status: draft
+  semantic_basis: REMBI / MIHCSME
+  module_name: image_data
+  profile: bioimaging
+
+classes:
+  MIMImageData:
+    description: Microscopy image data file with encoded image dimensions and ordered channel descriptions.
+    is_a: MIMDataFile
+    extra_slots:
+      allowed: true
+    attributes:
+      size_x:
+        description: Number of pixels along the X axis.
+        range: integer
+        minimum_value: 1
+        slot_uri: mim:ImageData_size_x
+      size_y:
+        description: Number of pixels along the Y axis.
+        range: integer
+        minimum_value: 1
+        slot_uri: mim:ImageData_size_y
+      size_z:
+        description: Number of Z planes; use 1 for a single plane.
+        range: integer
+        minimum_value: 1
+        slot_uri: mim:ImageData_size_z
+      size_c:
+        description: Number of encoded image channels, including a transmission channel when present.
+        range: integer
+        minimum_value: 1
+        slot_uri: mim:ImageData_size_c
+      size_t:
+        description: Number of timepoints; use 1 for a non-time-lapse acquisition.
+        range: integer
+        minimum_value: 1
+        slot_uri: mim:ImageData_size_t
+      channels:
+        description: Ordered channel descriptions corresponding to the encoded channel dimension.
+        range: MIMImagingChannel
+        slot_uri: mim:ImageData_channels
+        multivalued: true
+        inlined: true
+        inlined_as_list: true

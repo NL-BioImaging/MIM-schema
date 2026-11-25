@@ -1,0 +1,123 @@
+id: https://w3id.org/mim/schemas/profiles/bioimaging/hcs/reagent
+name: mim_bioimaging_hcs_reagent
+title: MIM HCS screening reagent and treatment
+description: MIHCSME-aligned high-content screening perturbation and reagent extensions built directly on foundation
+  MIMTreatment and MIMReagentComponent to avoid schema duplication.
+version: 1.0.0
+license: https://creativecommons.org/licenses/by/4.0/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  mim: https://w3id.org/mim/
+  jerm: http://jermontology.org/ontology/JERMOntology#
+  orcid: https://orcid.org/
+
+imports:
+- linkml:types
+- ../../../foundation/reagent_component
+- ../../../foundation/treatment
+- ../../../foundation/common
+- ../../../foundation/ontology_term
+- ../../../foundation/quantity_value
+- ../../../foundation/external_reference
+default_prefix: mim
+default_range: string
+
+created_by: orcid:0000-0002-4904-3269
+annotations:
+  created_by_name: Tooba Abbassi-Daloii
+  created_by_affiliation: Amsterdam UMC; ACDC
+  schema_status: draft
+  semantic_basis: MIHCSME / JERM
+  module_name: reagent
+  profile: bioimaging/hcs
+
+classes:
+  MIMScreeningReagent:
+    description: HCS perturbation reagent (small molecule compound, siRNA, shRNA, gRNA/CRISPR) extending foundation
+      MIMReagentComponent (inheriting id, title, description, version, comments, catalog_number, supplier, and lot_number).
+    annotations:
+      alignment_status: MIHCSME_ALIGNED
+    is_a: MIMReagentComponent
+    slot_usage:
+      component_type:
+        equals_string: MIMReagentComponent
+    extra_slots:
+      allowed: true
+    attributes:
+      reagent_modality:
+        description: Perturbation modality (e.g., small_molecule, siRNA, shRNA, gRNA_CRISPR, antibody).
+        range: MIMOntologyTerm
+        slot_uri: mim:ScreeningReagent_reagent_modality
+      sirna_pool_type:
+        description: Nucleic acid reagent pooling configuration (e.g., smartpool, single).
+        range: string
+        slot_uri: mim:ScreeningReagent_sirna_pool_type
+      sense_sequence:
+        description: Nucleotide sense strand sequence for RNAi/CRISPR reagents.
+        range: string
+        slot_uri: mim:ScreeningReagent_sense_sequence
+      antisense_sequence:
+        description: Nucleotide antisense strand sequence for RNAi reagents.
+        range: string
+        slot_uri: mim:ScreeningReagent_antisense_sequence
+      duplex_identifiers:
+        description: Individual duplex catalog identifiers composing a pooled siRNA reagent (e.g., DuplexNumber1..4).
+        range: string
+        slot_uri: mim:ScreeningReagent_duplex_identifiers
+        multivalued: true
+      target_gene_symbol:
+        description: Official HGNC or species gene symbol targeted by the reagent (e.g., CDC20, AAK1, IRF9).
+        range: string
+        slot_uri: mim:ScreeningReagent_target_gene_symbol
+      target_gene_synonyms:
+        description: Alternative gene symbol synonyms.
+        range: string
+        slot_uri: mim:ScreeningReagent_target_gene_synonyms
+        multivalued: true
+      target_gene_identifier:
+        description: Primary gene identifier (e.g., Ensembl Gene ID ENSG00000117399 or NCBI Gene ID 22848).
+        range: string
+        slot_uri: mim:ScreeningReagent_target_gene_identifier
+      refseq_accession:
+        description: Target transcript RefSeq accession (e.g., NM_014911).
+        range: string
+        slot_uri: mim:ScreeningReagent_refseq_accession
+      refseq_gi_number:
+        description: Target transcript RefSeq GI number.
+        range: string
+        slot_uri: mim:ScreeningReagent_refseq_gi_number
+      reagent_design_annotation_build:
+        description: Genome/transcriptome annotation build used when designing the reagent (e.g., GRCh37, Ensembl
+          release 61).
+        range: string
+        slot_uri: mim:ScreeningReagent_reagent_design_annotation_build
+      analysis_annotation_build:
+        description: Genome/transcriptome annotation build used during downstream screen analysis.
+        range: string
+        slot_uri: mim:ScreeningReagent_analysis_annotation_build
+      external_references:
+        description: External chemical or molecular database cross-references (e.g., PubChem CID, ChEBI ID, CAS
+          number).
+        range: MIMExternalReference
+        slot_uri: mim:ScreeningReagent_external_references
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  MIMScreenTreatment:
+    description: Well-level perturbation treatment extending foundation MIMTreatment (inheriting treatment_type,
+      dose [MIMQuantityValue], duration [MIMQuantityValue], protocol, input_materials, and output_data).
+    annotations:
+      alignment_status: MIHCSME_ALIGNED
+    is_a: MIMTreatment
+    slot_usage:
+      reagent:
+        range: MIMScreeningReagent
+    extra_slots:
+      allowed: true
+    attributes:
+      solvent_vehicle:
+        description: Solvent or vehicle medium and final concentration used for reagent delivery (e.g., 0.2% v/v
+          DMSO, PBS).
+        range: string
+        slot_uri: mim:ScreenTreatment_solvent_vehicle

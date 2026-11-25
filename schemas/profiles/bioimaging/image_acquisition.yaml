@@ -1,0 +1,54 @@
+id: https://w3id.org/mim/schemas/profiles/bioimaging/image_acquisition
+name: mim_bioimaging_image_acquisition
+title: MIM image acquisition
+description: REMBI and MIHCSME-aligned microscopy acquisition process extending foundation MIMProcess.
+version: 1.0.0
+license: https://creativecommons.org/licenses/by/4.0/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  mim: https://w3id.org/mim/
+  jerm: http://jermontology.org/ontology/JERMOntology#
+  orcid: https://orcid.org/
+
+imports:
+- linkml:types
+- ../../foundation/process
+- ../../foundation/ontology_term
+- imaging_instrument
+default_prefix: mim
+default_range: string
+
+created_by: orcid:0000-0002-4904-3269
+annotations:
+  created_by_name: Tooba Abbassi-Daloii
+  created_by_affiliation: Amsterdam UMC; ACDC
+  schema_status: draft
+  semantic_basis: REMBI / MIHCSME / FBbi
+  module_name: image_acquisition
+  profile: bioimaging
+
+classes:
+  MIMImageAcquisition:
+    description: Microscopy image acquisition execution extending MIMProcess (inheriting protocol, performers, input_materials,
+      output_data, parameter_values, measurements, and assay_reference).
+    annotations:
+      alignment_status: REMBI_MIHCSME_ALIGNED
+    is_a: MIMProcess
+    extra_slots:
+      allowed: true
+    attributes:
+      imaging_method:
+        description: FBbi ontology term describing the microscopy imaging modality (e.g., confocal microscopy, bright-field
+          microscopy, fluorescence microscopy).
+        range: MIMOntologyTerm
+        slot_uri: mim:ImageAcquisition_imaging_method
+      instrument:
+        description: Microscope hardware configuration used during image acquisition.
+        range: MIMImagingInstrument
+        slot_uri: mim:ImageAcquisition_instrument
+      time_interval:
+        description: Optional interval between sequential timepoints for time-lapse acquisition.
+        range: MIMQuantityValue
+        slot_uri: mim:ImageAcquisition_time_interval
+        inlined: true

@@ -1,0 +1,93 @@
+id: https://w3id.org/mim/schemas/profiles/bioimaging/hcs/screen
+name: mim_bioimaging_hcs_screen
+title: MIM HCS screen
+description: MIHCSME-aligned high-content screening assay extending foundation MIMAssay.
+version: 1.0.0
+license: https://creativecommons.org/licenses/by/4.0/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  mim: https://w3id.org/mim/
+  jerm: http://jermontology.org/ontology/JERMOntology#
+  orcid: https://orcid.org/
+
+imports:
+- linkml:types
+- ../../../foundation/assay
+- ../../../foundation/data_file
+- ../../../foundation/file_format
+- ../../../foundation/ontology_term
+- ../../../foundation/external_reference
+- ../../../foundation/protocol
+- plate
+- reagent
+default_prefix: mim
+default_range: string
+
+created_by: orcid:0000-0002-4904-3269
+annotations:
+  created_by_name: Tooba Abbassi-Daloii
+  created_by_affiliation: Amsterdam UMC; ACDC
+  schema_status: draft
+  semantic_basis: MIHCSME / EFO / JERM
+  module_name: screen
+  profile: bioimaging/hcs
+
+classes:
+  MIMScreeningLibrary:
+    description: Reusable screening library metadata shared by one or more screens.
+    annotations:
+      alignment_status: MIHCSME_ALIGNED
+    mixins:
+    - MIMIdentifiedMixin
+    - MIMNamedMixin
+    - MIMCommentedMixin
+    extra_slots:
+      allowed: true
+    attributes: {}
+  MIMScreen:
+    description: High-content screening assay extending foundation MIMAssay (inheriting title, description, assay_type
+      [EFO], technology_type [FBbi], processes, samples, study_reference, external_references, contributors, and
+      license).
+    annotations:
+      alignment_status: MIHCSME_ALIGNED
+    is_a: MIMAssay
+    extra_slots:
+      allowed: true
+    attributes:
+      screen_stage:
+        description: Screening campaign stage (e.g., primary screen, secondary screen, counter screen, validation
+          screen).
+        range: MIMOntologyTerm
+        slot_uri: mim:Screen_screen_stage
+      declared_number_of_biological_replicates:
+        description: Declared number of biological replicates in the complete screen.
+        range: integer
+        slot_uri: mim:Screen_declared_number_of_biological_replicates
+        minimum_value: 1
+      declared_number_of_plates:
+        description: Declared total number of plates in the complete screen; may exceed the number of plate objects
+          included in a partial package.
+        range: integer
+        slot_uri: mim:Screen_declared_number_of_plates
+        minimum_value: 1
+      sites_per_well:
+        description: Default number of acquisition fields/sites imaged per well across the screen.
+        range: integer
+        slot_uri: mim:Screen_sites_per_well
+        minimum_value: 1
+      omero_screen_url:
+        description: Direct OMERO or IDR webclient URI for the screen (e.g., show=screen-1460).
+        range: uri
+        slot_uri: mim:Screen_omero_screen_url
+      library:
+        description: Reference to reusable screening-library metadata.
+        range: MIMScreeningLibrary
+        slot_uri: mim:Screen_library
+      plates:
+        description: Microplates belonging to this high-content screen.
+        range: MIMPlate
+        slot_uri: mim:Screen_plates
+        multivalued: true
+        inlined: true
+        inlined_as_list: true

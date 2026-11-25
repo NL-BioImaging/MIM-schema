@@ -1,0 +1,114 @@
+id: https://w3id.org/mim/schemas/profiles/bioimaging/hcs/well
+name: mim_bioimaging_hcs_well
+title: MIM HCS well
+description: MIHCSME-aligned well coordinates, control roles, and links to foundation MIMSample, MIMDataFile, and
+  MIMScreenTreatment.
+version: 1.0.0
+license: https://creativecommons.org/licenses/by/4.0/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  mim: https://w3id.org/mim/
+  jerm: http://jermontology.org/ontology/JERMOntology#
+  orcid: https://orcid.org/
+
+imports:
+- linkml:types
+- ../../../foundation/common
+- ../../../foundation/ontology_term
+- ../../../foundation/external_reference
+- ../../../foundation/sample
+- ../../../foundation/treatment
+- ../../../foundation/data_file
+- ../../../foundation/quantity_value
+- reagent
+default_prefix: mim
+default_range: string
+
+created_by: orcid:0000-0002-4904-3269
+annotations:
+  created_by_name: Tooba Abbassi-Daloii
+  created_by_affiliation: Amsterdam UMC; ACDC
+  schema_status: draft
+  semantic_basis: MIHCSME
+  module_name: well
+  profile: bioimaging/hcs
+
+classes:
+  MIMWell:
+    description: Single microplate well record linking spatial coordinates and control roles to foundation samples,
+      treatments, and image files.
+    annotations:
+      alignment_status: MIHCSME_ALIGNED
+    mixins:
+    - MIMIdentifiedMixin
+    - MIMNamedMixin
+    - MIMCommentedMixin
+    extra_slots:
+      allowed: true
+    attributes:
+      well_address:
+        description: Combined alphanumeric well coordinate (e.g., A01, K09, B02).
+        range: string
+        slot_uri: mim:Well_well_address
+        required: true
+        pattern: ^[A-Za-z]+[0-9]+$
+      row_coordinate:
+        description: Alphabetical row identifier (e.g., A..P).
+        range: string
+        slot_uri: mim:Well_row_coordinate
+      column_coordinate:
+        description: Numerical column identifier (e.g., 1..24).
+        range: integer
+        slot_uri: mim:Well_column_coordinate
+      well_number:
+        description: Sequential 1-based well index across the plate.
+        range: integer
+        slot_uri: mim:Well_well_number
+      well_role:
+        description: Experimental role of the well (e.g., sample, positive control, negative control, vehicle control,
+          blank).
+        range: MIMOntologyTerm
+        slot_uri: mim:Well_well_role
+      replicate_id:
+        description: Replicate identifier for this well condition (e.g., Rep1, 1).
+        range: string
+        slot_uri: mim:Well_replicate_id
+      quality_control_status:
+        description: Well-level quality control outcome (e.g., pass, fail).
+        range: string
+        slot_uri: mim:Well_quality_control_status
+      field_layout_pattern:
+        description: Spatial arrangement of fields within the well (e.g., 6x6_montage, 1x2_grid, single_center).
+        range: string
+        slot_uri: mim:Well_field_layout_pattern
+      sample_reference:
+        description: Reference to the biological sample/cell line seeded in this well (foundation MIMSample).
+        range: uriorcurie
+        slot_uri: mim:Well_sample_reference
+        annotations:
+          referenced_class: MIMSample
+      treatments:
+        description: Experimental interventions/perturbations applied to this well (extending foundation MIMTreatment).
+        range: MIMScreenTreatment
+        slot_uri: mim:Well_treatments
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      image_files:
+        description: Acquired microscopy image files or well directories associated with this well (foundation MIMDataFile).
+        range: MIMDataFile
+        slot_uri: mim:Well_image_files
+        multivalued: true
+      external_references:
+        description: External repository identifiers for the well (e.g., IDR Well ID).
+        range: MIMExternalReference
+        slot_uri: mim:Well_external_references
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      sites_per_well:
+        description: Optional well-specific override of the screen-level sites_per_well value.
+        range: integer
+        slot_uri: mim:Well_sites_per_well
+        minimum_value: 1
